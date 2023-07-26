@@ -10,6 +10,7 @@ export default function FinishPage(_: ComponentProps) {
 	const restart = () => {
 		/** delete user progress */
 		localStorage.removeItem("progress");
+		localStorage.removeItem("answers");
 		window.location.reload();
 	};
 	return (

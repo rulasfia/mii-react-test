@@ -1,7 +1,8 @@
-import { SetStateAction } from "react";
+import type { PageType } from "../App";
+import { SetStateAction, useEffect, useState } from "react";
 import { questions } from "../resources/questions";
 import Button from "../components/ui/Button";
-import type { PageType } from "../App";
+import AnswerGroup from "../components/questions/AnswerGroup";
 
 type ComponentProps = {
 	nextPage: (to: PageType) => void;
@@ -10,20 +11,29 @@ type ComponentProps = {
 };
 
 export default function QuestionPage(props: ComponentProps) {
+	const [savedAnswer, setSavedAnswer] = useState<{ [k: string]: number }>({});
+
+	/** synchronize user previous answer when opening question page */
+	useEffect(() => {
+		const answers = JSON.parse(localStorage.getItem("answers") ?? "0");
+		if (typeof answers === "object") setSavedAnswer(answers);
+	}, []);
+
 	const goToNextQuestion = () => {
-		props.updateProgress((cVal) => cVal + 1);
 		/** save user question progress */
 		localStorage.setItem("progress", (props.progress + 1).toString());
-		/** TODO: save user answer */
+
+		props.updateProgress((cVal) => cVal + 1);
 	};
 
-	const goToPrevQuestion = () => {
-		props.updateProgress((cVal) => cVal - 1);
-		/** save user progress */
-		localStorage.setItem("progress", (props.progress - 1).toString());
+	const updateSavedAnswer = (qID: string, aIdx: number) => {
+		const updatedAnswer = { ...savedAnswer, [qID]: aIdx };
+		/** save user answer */
+		setSavedAnswer(updatedAnswer);
+		localStorage.setItem("answers", JSON.stringify(updatedAnswer));
 	};
 
-	console.log({ progress: props.progress });
+	console.log({ progress: props.progress, savedAnswer });
 	return (
 		<article className="flex h-full flex-col justify-between">
 			<div className="flex flex-col items-center">
@@ -33,23 +43,17 @@ export default function QuestionPage(props: ComponentProps) {
 					return idx === props.progress ? (
 						<div key={q.id}>
 							<p>{q.question}</p>
-							<ul>
-								{q.answers.map((item) => (
-									<li key={item}>{item}</li>
-								))}
-							</ul>
+							<AnswerGroup
+								question={q}
+								savedAnswerID={savedAnswer[q.id]}
+								updateSavedAnswer={updateSavedAnswer}
+							/>
 						</div>
 					) : null;
 				})}
 			</div>
 
 			<div className="flex flex-col items-center justify-center gap-y-3">
-				<Button
-					onClick={goToPrevQuestion}
-					className={props.progress < 1 ? "hidden" : ""}
-				>
-					Prev
-				</Button>
 				<Button
 					onClick={
 						props.progress >= questions.length - 1

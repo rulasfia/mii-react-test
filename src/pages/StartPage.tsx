@@ -13,6 +13,7 @@ export default function StartPage(props: PageProps) {
 	const startOver = () => {
 		/** delete user progress */
 		localStorage.removeItem("progress");
+		localStorage.removeItem("answers");
 		props.nextPage("question", true);
 	};
 
