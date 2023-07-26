@@ -37,6 +37,7 @@ export default function FinishPage(_: ComponentProps) {
 				<div></div>
 			</div>
 
+			<div className="w-full rounded border border-primary md:ml-0" />
 			<div className="flex flex-col items-center justify-center gap-y-3">
 				<Button onClick={restart}>Restart Survey</Button>
 			</div>

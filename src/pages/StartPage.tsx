@@ -19,19 +19,16 @@ export default function StartPage(props: PageProps) {
 
 	return (
 		<article className="flex h-full flex-col justify-between gap-y-8">
-			<div className="flex h-full flex-col border-2 border-solid border-primary bg-white px-4 py-6 shadow-hard">
+			<div className="flex h-full flex-col justify-center border-2 border-solid border-primary bg-white px-4 py-8 shadow-hard">
 				<div className="flex flex-col items-center">
-					<p className="text-lg">Wellcome to</p>
-					<h1 className="text-3xl font-bold">Tomato Survey!</h1>
+					<p className="-mb-2 text-xl">Wellcome to</p>
+					<h1 className="text-4xl font-bold underline">Tomato Survey</h1>
 				</div>
 
-				<div className="mt-6">
-					<h5 className="text-lg font-semibold">Notes:</h5>
-					<ul className="list-inside list-disc">
-						<li>Lorem ipsum dolor sit amet.</li>
-						<li>Lorem ipsum dolor sit amet.</li>
-						<li>Lorem ipsum dolor sit amet.</li>
-					</ul>
+				<div className="mt-12">
+					<p className="text-center text-lg">
+						You have 5 minutes to complete this survey!
+					</p>
 				</div>
 			</div>
 

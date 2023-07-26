@@ -36,14 +36,17 @@ export default function QuestionPage(props: ComponentProps) {
 
 	return (
 		<article className="flex h-full flex-col justify-between gap-y-8">
-			<div className="flex h-full flex-col border-2 border-solid border-primary bg-white px-4 py-6 shadow-hard">
-				<h1 className="mb-4 text-3xl font-bold text-primary opacity-60">
+			<div className="flex h-full flex-col items-start border-2 border-solid border-primary bg-white px-4 py-8 shadow-hard">
+				<h1 className="mx-auto mb-4 w-full max-w-xl text-3xl font-bold text-primary opacity-60">
 					Q{props.progress + 1}
 				</h1>
 
 				{questions.map((q, idx) => {
 					return idx === props.progress ? (
-						<div key={q.id} className="flex flex-col gap-y-4">
+						<div
+							key={q.id}
+							className="mx-auto flex w-full max-w-xl flex-col gap-y-4"
+						>
 							<p className="text-lg">{q.question}</p>
 							<AnswerGroup
 								question={q}
