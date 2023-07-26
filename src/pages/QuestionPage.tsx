@@ -34,6 +34,11 @@ export default function QuestionPage(props: ComponentProps) {
 		localStorage.setItem("answers", JSON.stringify(updatedAnswer));
 	};
 
+	console.log({
+		prog: props.progress,
+		sa: savedAnswer,
+		sal: Object.keys(savedAnswer).length,
+	});
 	return (
 		<article className="flex h-full flex-col justify-between gap-y-8">
 			<div className="flex h-full flex-col items-start border-2 border-solid border-primary bg-white px-4 py-8 shadow-hard">
@@ -61,11 +66,15 @@ export default function QuestionPage(props: ComponentProps) {
 			<div className="flex flex-col items-center justify-center gap-y-3">
 				<Timer nextPage={props.nextPage} />
 				<Button
-					// className="bg-black"
 					onClick={
 						props.progress >= questions.length - 1
 							? () => props.nextPage("finish")
 							: goToNextQuestion
+					}
+					disabled={
+						Object.keys(savedAnswer).length === props.progress + 1
+							? false
+							: true
 					}
 				>
 					{props.progress >= questions.length - 1 ? "Finish" : "Next"}
