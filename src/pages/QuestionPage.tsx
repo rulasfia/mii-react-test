@@ -3,6 +3,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { questions } from "../resources/questions";
 import Button from "../components/ui/Button";
 import AnswerGroup from "../components/questions/AnswerGroup";
+import Timer from "../components/questions/Timer";
 
 type ComponentProps = {
 	nextPage: (to: PageType) => void;
@@ -55,6 +56,7 @@ export default function QuestionPage(props: ComponentProps) {
 			</div>
 
 			<div className="flex flex-col items-center justify-center gap-y-3">
+				<Timer nextPage={props.nextPage} />
 				<Button
 					// className="bg-black"
 					onClick={
