@@ -1,7 +1,8 @@
+import type { PageType } from "../App";
 import Button from "../components/ui/Button";
 
 type ComponentProps = {
-	nextPage: () => void;
+	nextPage: (to: PageType) => void;
 	progress: number;
 };
 

@@ -1,44 +1,36 @@
-import { useState } from "react";
+import { SetStateAction } from "react";
 import { questions } from "../resources/questions";
 import Button from "../components/ui/Button";
+import type { PageType } from "../App";
 
 type ComponentProps = {
-	nextPage: () => void;
+	nextPage: (to: PageType) => void;
 	progress: number;
+	updateProgress: (x: SetStateAction<number>) => void;
 };
 
 export default function QuestionPage(props: ComponentProps) {
-	/** active question state */
-	const [activeQuestion, setActiveQuestion] = useState(props.progress);
-
-	/** synchronize user progress on load */
-	// useEffect(() => {
-	// 	const progress = parseInt(localStorage.getItem("progress") ?? "0");
-
-	// 	setActiveQuestion(isNaN(progress) ? 0 : progress);
-	// }, []);
-
 	const goToNextQuestion = () => {
-		setActiveQuestion((cVal) => cVal + 1);
-		/** save user progress */
-		localStorage.setItem("progress", (activeQuestion + 1).toString());
+		props.updateProgress((cVal) => cVal + 1);
+		/** save user question progress */
+		localStorage.setItem("progress", (props.progress + 1).toString());
 		/** TODO: save user answer */
 	};
 
 	const goToPrevQuestion = () => {
-		setActiveQuestion((cVal) => cVal - 1);
+		props.updateProgress((cVal) => cVal - 1);
 		/** save user progress */
-		localStorage.setItem("progress", (activeQuestion - 1).toString());
+		localStorage.setItem("progress", (props.progress - 1).toString());
 	};
 
-	console.log({ activeQuestion });
+	console.log({ progress: props.progress });
 	return (
 		<article className="flex h-full flex-col justify-between">
 			<div className="flex flex-col items-center">
-				<p>Question {activeQuestion + 1}</p>
+				<p>Question {props.progress + 1}</p>
 
 				{questions.map((q, idx) => {
-					return idx === activeQuestion ? (
+					return idx === props.progress ? (
 						<div key={q.id}>
 							<p>{q.question}</p>
 							<ul>
@@ -54,18 +46,18 @@ export default function QuestionPage(props: ComponentProps) {
 			<div className="flex flex-col items-center justify-center gap-y-3">
 				<Button
 					onClick={goToPrevQuestion}
-					className={activeQuestion < 1 ? "hidden" : ""}
+					className={props.progress < 1 ? "hidden" : ""}
 				>
 					Prev
 				</Button>
 				<Button
 					onClick={
-						activeQuestion >= questions.length - 1
-							? props.nextPage
+						props.progress >= questions.length - 1
+							? () => props.nextPage("finish")
 							: goToNextQuestion
 					}
 				>
-					{activeQuestion >= questions.length - 1 ? "Finish" : "Next"}
+					{props.progress >= questions.length - 1 ? "Finish" : "Next"}
 				</Button>
 			</div>
 		</article>

@@ -1,25 +1,19 @@
 // import { useState } from "react";
+import type { PageType } from "../App";
 import Button from "../components/ui/Button";
 
-type ComponentProps = {
-	nextPage: (_?: boolean) => void;
+type PageProps = {
+	nextPage: (to: PageType, restart?: boolean) => void;
 	progress: number;
 };
 
-export default function StartPage(props: ComponentProps) {
+export default function StartPage(props: PageProps) {
 	const isContinuing = props.progress ? true : false;
-
-	/** synchronize user progress on load */
-	// useEffect(() => {
-	// 	const progress = localStorage.getItem("progress");
-
-	// 	if (progress) setIsContinuing(true);
-	// }, []);
 
 	const startOver = () => {
 		/** delete user progress */
 		localStorage.removeItem("progress");
-		props.nextPage(true);
+		props.nextPage("question", true);
 	};
 
 	return (
@@ -42,7 +36,7 @@ export default function StartPage(props: ComponentProps) {
 				{isContinuing ? (
 					<Button onClick={startOver}>{"Start Over"}</Button>
 				) : null}
-				<Button onClick={() => props.nextPage()}>
+				<Button onClick={() => props.nextPage("question")}>
 					{isContinuing ? "Continue" : "Start"}
 				</Button>
 			</div>
