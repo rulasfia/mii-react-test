@@ -13,9 +13,9 @@ export default function AnswerGroup({
 	updateSavedAnswer,
 }: ComponentProps) {
 	return (
-		<fieldset>
+		<fieldset className="flex flex-col gap-y-2">
 			{q.answers.map((item, aIdx) => (
-				<label key={item} className="flex items-center">
+				<label key={item} className="flex items-center py-2">
 					<Input
 						type="radio"
 						name={q.question}
@@ -24,7 +24,7 @@ export default function AnswerGroup({
 						checked={savedAnswerID === aIdx}
 						onChange={() => updateSavedAnswer(q.id, aIdx)}
 					/>
-					<span className="ml-2 text-sm font-medium">{item}</span>
+					<span className="ml-3 font-medium">{item}</span>
 				</label>
 			))}
 		</fieldset>

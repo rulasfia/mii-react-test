@@ -14,7 +14,7 @@ export default function Input({
 			<input
 				type={type}
 				className={cn(
-					"h-4 w-4 rounded-full focus:rounded-full focus:border-none focus:outline-none focus:ring focus:ring-primary",
+					"h-5 w-5 rounded-full outline-primary/50 focus:rounded-full focus:border-none focus:outline-2",
 					className,
 				)}
 				{...props}

@@ -14,9 +14,11 @@ export default function FinishPage(_: ComponentProps) {
 		window.location.reload();
 	};
 	return (
-		<article className="flex h-full flex-col justify-between">
-			<div className="flex flex-col items-center">
-				<p>Thank you for your participation!</p>
+		<article className="flex h-full flex-col justify-between gap-y-8">
+			<div className="flex h-full flex-col items-center justify-center border-2 border-solid border-primary bg-white px-4 py-6 shadow-hard">
+				<h1 className="text-center text-2xl font-semibold">
+					Thank you for your participation!
+				</h1>
 			</div>
 
 			<div className="flex flex-col items-center justify-center gap-y-3">

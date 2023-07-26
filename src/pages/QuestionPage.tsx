@@ -33,16 +33,17 @@ export default function QuestionPage(props: ComponentProps) {
 		localStorage.setItem("answers", JSON.stringify(updatedAnswer));
 	};
 
-	console.log({ progress: props.progress, savedAnswer });
 	return (
-		<article className="flex h-full flex-col justify-between">
-			<div className="flex flex-col items-center">
-				<p>Question {props.progress + 1}</p>
+		<article className="flex h-full flex-col justify-between gap-y-8">
+			<div className="flex h-full flex-col border-2 border-solid border-primary bg-white px-4 py-6 shadow-hard">
+				<h1 className="mb-4 text-3xl font-bold text-primary opacity-60">
+					Q{props.progress + 1}
+				</h1>
 
 				{questions.map((q, idx) => {
 					return idx === props.progress ? (
-						<div key={q.id}>
-							<p>{q.question}</p>
+						<div key={q.id} className="flex flex-col gap-y-4">
+							<p className="text-lg">{q.question}</p>
 							<AnswerGroup
 								question={q}
 								savedAnswerID={savedAnswer[q.id]}
@@ -55,6 +56,7 @@ export default function QuestionPage(props: ComponentProps) {
 
 			<div className="flex flex-col items-center justify-center gap-y-3">
 				<Button
+					// className="bg-black"
 					onClick={
 						props.progress >= questions.length - 1
 							? () => props.nextPage("finish")
